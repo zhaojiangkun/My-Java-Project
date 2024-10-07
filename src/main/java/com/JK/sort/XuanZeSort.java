@@ -16,7 +16,7 @@ public class XuanZeSort {
     }
 
     /**
-     * 选择排序
+     *   选择排序
      *
      * @param nums
      */
