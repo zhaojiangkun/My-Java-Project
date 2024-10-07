@@ -18,4 +18,17 @@ public class ScanInUtil {
         }
         return nums;
     }
+
+    public static ListNode scanInToListNode(){
+        Scanner scanner = new Scanner(System.in);
+        String nextLine = scanner.nextLine();
+        String[] splitS = nextLine.split(",");
+        ListNode node = new ListNode();
+        ListNode res = node;
+        for (String split : splitS) {
+            node.next = new ListNode(Integer.parseInt(split));
+            node = node.next;
+        }
+        return res.next;
+    }
 }
