@@ -4,6 +4,8 @@ import com.JK.util.ListNode;
 import com.JK.util.ScanInUtil;
 
 /**
+ * 合并两个有序链表
+ * https://leetcode.cn/problems/merge-two-sorted-lists/
  * @Author: ZhaoJiangKun
  * @Date: 2024-10-07 14:12
  */

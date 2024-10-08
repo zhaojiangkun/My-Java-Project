@@ -31,4 +31,9 @@ public class ScanInUtil {
         }
         return res.next;
     }
+
+    public static int scanInToInt(){
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextInt();
+    }
 }
