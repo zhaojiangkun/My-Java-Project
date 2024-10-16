@@ -32,8 +32,21 @@ public class ScanInUtil {
         return res.next;
     }
 
+    /**
+     * 输入一个数字
+     * @return
+     */
     public static int scanInToInt(){
         Scanner scanner = new Scanner(System.in);
         return scanner.nextInt();
+    }
+
+    /**
+     * 输入一行字符串
+     * @return
+     */
+    public static String scanInToStr(){
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine();
     }
 }
