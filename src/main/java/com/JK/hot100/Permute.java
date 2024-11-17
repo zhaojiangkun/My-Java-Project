@@ -13,8 +13,6 @@ import java.util.List;
  */
 public class Permute {
 
-
-
     public static void main(String[] args) {
         int[] nums = ScanInUtil.scanInToIntArray();
         List<List<Integer>> res = permute(nums);
