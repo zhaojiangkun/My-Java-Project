@@ -20,7 +20,33 @@ public class WindowExec {
 
         int[] nums = ScanInUtil.scanInToIntArray();
         int k = ScanInUtil.scanInToInt();
-        System.out.println(findMaxAverage(nums, k));
+        int threshold = ScanInUtil.scanInToInt();
+        System.out.println(numOfSubarrays(nums, k, threshold));
+    }
+
+    /**
+     * 大小为k且平均值大于等于阈值的子数组数目
+     * @param arr
+     * @param k
+     * @param threshold
+     * @return
+     */
+    public static int numOfSubarrays(int[] arr, int k, int threshold) {
+        int count = 0;
+        int maxThreshold = k * threshold;
+        int tempSum = 0;
+        for (int i = 0; i < arr.length; i++){
+            //进入窗口
+            tempSum += arr[i];
+
+            //更新
+            if (i - k + 1 < 0) continue;
+            if (tempSum >= maxThreshold) count++;
+
+            //离开窗口
+            tempSum -= arr[i - k + 1];
+        }
+        return count;
     }
 
     /**
