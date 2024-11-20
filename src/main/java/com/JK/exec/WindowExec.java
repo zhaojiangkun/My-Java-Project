@@ -1,5 +1,7 @@
 package com.JK.exec;
 
+import com.JK.util.ScanInUtil;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,9 +14,13 @@ import java.util.Set;
 public class WindowExec {
 
     public static void main(String[] args) {
-        String s = "pdzndkhhoujpqyex";
-        int k = 5;
-        System.out.println(maxVowels(s, k));
+//        String s = "pdzndkhhoujpqyex";
+//        int k = 5;
+//        System.out.println(maxVowels(s, k));
+
+        int[] nums = ScanInUtil.scanInToIntArray();
+        int k = ScanInUtil.scanInToInt();
+        System.out.println(findMaxAverage(nums, k));
     }
 
     /**
@@ -39,5 +45,27 @@ public class WindowExec {
             if(set.contains(s.charAt(i - k + 1))) tempMax--;
         }
         return max;
+    }
+
+    /**
+     * 子数组最大平均数
+     * @param nums
+     * @param k
+     * @return
+     */
+    public static double findMaxAverage(int[] nums, int k) {
+        double max = Integer.MIN_VALUE;
+        double tempMax = 0;
+        for (int i = 0; i < nums.length; i++) {
+            //进入窗口
+            tempMax += nums[i];
+            if (i - k + 1 < 0) continue;
+            //更新
+            max = Math.max(max, tempMax);
+
+            //离开窗口
+            tempMax -= nums[i - k + 1];
+        }
+        return max / k;
     }
 }
