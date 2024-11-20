@@ -21,8 +21,44 @@ public class WindowExec {
 
         int[] nums = ScanInUtil.scanInToIntArray();
         int k = ScanInUtil.scanInToInt();
-        int threshold = ScanInUtil.scanInToInt();
-        System.out.println(numOfSubarrays(nums, k, threshold));
+//        int threshold = ScanInUtil.scanInToInt();
+        for (int average : getAverages(nums, k)) {
+            System.out.println(average);
+        }
+    }
+
+    /**
+     * 半径为k的子数组平均值
+     * @param nums
+     * @param k
+     * @return
+     */
+    public static int[] getAverages(int[] nums, int k) {
+
+        int[] res = new int[nums.length];
+        for (int i = 0; i < nums.length; i++){
+            //前k个和后k个肯定是-1
+            if (i < k || i + k + 1 > nums.length){
+                res[i] = -1;
+            }
+        }
+        long len = 2 * k + 1;
+        long tempSum = 0;
+        for (int i = 0; i < nums.length; i++){
+            //进入窗口
+            tempSum += nums[i];
+            //更新
+            if (i - len + 1 < 0) continue;
+            if (res[k] != -1){
+                res[k] = (int) (tempSum / len);
+                k++;
+            };
+            //离开窗口
+            tempSum -= nums[(int) (i - len + 1)];
+//            if (res[i] == -1) continue;
+
+        }
+        return res;
     }
 
     /**
