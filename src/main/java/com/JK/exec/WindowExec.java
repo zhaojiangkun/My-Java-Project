@@ -18,14 +18,42 @@ public class WindowExec {
 //        int k = 2;
 //        System.out.println(hasAllCodes(s, k));
 
-        List<Integer> nums = ScanInUtil.scanInToIntList();
+//        List<Integer> nums = ScanInUtil.scanInToIntList();
+        int[] nums = ScanInUtil.scanInToIntArray();
         int m = ScanInUtil.scanInToInt();
-        int k = ScanInUtil.scanInToInt();
-        System.out.println(maxSum(nums, m, k));
+//        int k = ScanInUtil.scanInToInt();
+        System.out.println(maximumSubarraySum(nums, m));
 //        int threshold = ScanInUtil.scanInToInt();
 //        for (int average : getAverages(nums, k)) {
 //            System.out.println(average);
 //        }
+    }
+
+    /**
+     * 长度为k子数组中的最大和
+     * @param nums
+     * @param k
+     * @return
+     */
+    public static long maximumSubarraySum(int[] nums, int k) {
+        long res = 0;
+        long temp = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            //进入窗口
+            temp += nums[i];
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+            if (i - k + 1 < 0) continue;
+            //更新最大值
+
+            if (map.size() == k) {
+                res = Math.max(res, temp);
+            }
+            //移出窗口左边界值
+            temp -= nums[i - k + 1];
+            map.computeIfPresent(nums[i - k + 1], (key, value) -> value - 1 == 0 ? null : value - 1);
+        }
+        return res;
     }
 
     /**
