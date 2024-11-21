@@ -1,7 +1,5 @@
 package com.JK.exec;
 
-import com.JK.util.ScanInUtil;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,18 +14,41 @@ import java.util.Set;
 public class WindowExec {
 
     public static void main(String[] args) {
-//        String s = "WBBWWBBWBW";
-//        int k = 7;
-//        System.out.println(minimumRecolors(s, k));
+        String s = "00110110";
+        int k = 2;
+        System.out.println(hasAllCodes(s, k));
 
-        int[] customers = ScanInUtil.scanInToIntArray();
-        int[] grumpy = ScanInUtil.scanInToIntArray();
-        int minutes = ScanInUtil.scanInToInt();
-        System.out.println(maxSatisfied(customers, grumpy, minutes));
+//        int[] customers = ScanInUtil.scanInToIntArray();
+//        int[] grumpy = ScanInUtil.scanInToIntArray();
+//        int minutes = ScanInUtil.scanInToInt();
+//        System.out.println(maxSatisfied(customers, grumpy, minutes));
 //        int threshold = ScanInUtil.scanInToInt();
 //        for (int average : getAverages(nums, k)) {
 //            System.out.println(average);
 //        }
+    }
+
+    /**
+     * 检查一个字符串是否包含所有长度为k的二进制子串
+     *
+     * @param s
+     * @param k
+     * @return
+     */
+    public static boolean hasAllCodes(String s, int k) {
+        int size = (int) Math.pow(2, k);
+        Set<String> set = new HashSet<>();
+        //窗口大小为k，从字符串的k-1位置开始遍历
+        for (int i = k - 1; i <= s.length(); i++) {
+            StringBuilder sb = new StringBuilder();
+            //获取字符串的子串，开始位置为当前索引的前k个位置，如果i-k<0就从0开始
+            //结束位置为当前索引
+            sb.append(s.substring(i - k < 0 ? 0 : i - k, i));
+            //如果子串长度不为k，则跳过
+            if (sb.toString().length() != k) continue;
+            set.add(sb.toString());
+        }
+        return set.size() == size;
     }
 
     /**
