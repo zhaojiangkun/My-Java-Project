@@ -1,8 +1,8 @@
 package com.JK.exec;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import com.JK.util.ScanInUtil;
+
+import java.util.*;
 
 /**
  * 滑动窗口练习
@@ -15,17 +15,50 @@ public class WindowExec {
 
     public static void main(String[] args) {
         String s = "00110110";
-        int k = 2;
-        System.out.println(hasAllCodes(s, k));
+//        int k = 2;
+//        System.out.println(hasAllCodes(s, k));
 
-//        int[] customers = ScanInUtil.scanInToIntArray();
-//        int[] grumpy = ScanInUtil.scanInToIntArray();
-//        int minutes = ScanInUtil.scanInToInt();
-//        System.out.println(maxSatisfied(customers, grumpy, minutes));
+        List<Integer> nums = ScanInUtil.scanInToIntList();
+        int m = ScanInUtil.scanInToInt();
+        int k = ScanInUtil.scanInToInt();
+        System.out.println(maxSum(nums, m, k));
 //        int threshold = ScanInUtil.scanInToInt();
 //        for (int average : getAverages(nums, k)) {
 //            System.out.println(average);
 //        }
+    }
+
+    /**
+     * 几乎唯一子数组的最大和
+     *
+     * @param nums
+     * @param m
+     * @param k
+     * @return
+     */
+    public static long maxSum(List<Integer> nums, int m, int k) {
+        long res = 0;
+        long temp = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.size(); i++) {
+            //进入窗口
+            temp += nums.get(i);
+            map.put(nums.get(i), map.getOrDefault(nums.get(i), 0) + 1);
+
+            //校验窗口大小
+            if (i - k + 1 < 0) continue;
+
+            //更新最大值:遍历当前窗口数组是否为几乎唯一子数组，如果是则更新最大值
+            if (map.size() >= m) {
+                res = Math.max(res, temp);
+            }
+
+            //移出窗口左边界值
+            temp -= nums.get(i - k + 1);
+            //如果窗口左边界的值仅有一个，则将该key设为null
+            map.computeIfPresent(nums.get(i - k + 1), (key, value) -> value - 1 == 0 ? null : value - 1);
+        }
+        return res;
     }
 
     /**

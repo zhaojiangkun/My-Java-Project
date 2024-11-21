@@ -1,5 +1,7 @@
 package com.JK.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -48,5 +50,16 @@ public class ScanInUtil {
     public static String scanInToStr(){
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
+    }
+
+    public static List<Integer> scanInToIntList(){
+        Scanner scanner = new Scanner(System.in);
+        String nextLine = scanner.nextLine();
+        String[] splitS = nextLine.split(",");
+        List<Integer> nums = new ArrayList<>();
+        for (int i = 0; i < splitS.length; i++) {
+            nums.add(i, Integer.parseInt(splitS[i]));
+        }
+        return nums;
     }
 }
