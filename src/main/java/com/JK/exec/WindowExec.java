@@ -19,14 +19,43 @@ public class WindowExec {
 //        System.out.println(hasAllCodes(s, k));
 
 //        List<Integer> nums = ScanInUtil.scanInToIntList();
-        int[] nums = ScanInUtil.scanInToIntArray();
-        int m = ScanInUtil.scanInToInt();
+//        int[] nums = ScanInUtil.scanInToIntArray();
+//        int m = ScanInUtil.scanInToInt();
 //        int k = ScanInUtil.scanInToInt();
-        System.out.println(maxScore(nums, m));
-//        int threshold = ScanInUtil.scanInToInt();
-//        for (int average : getAverages(nums, k)) {
-//            System.out.println(average);
-//        }
+//        System.out.println(maxScore(nums, m));
+        int[] nums = ScanInUtil.scanInToIntArray();
+        int k = ScanInUtil.scanInToInt();
+        int x = ScanInUtil.scanInToInt();
+        for (int average : getSubarrayBeauty(nums, k, x)) {
+            System.out.println(average);
+        }
+    }
+
+    /**
+     * 滑动子数组的美丽值
+     */
+    public static int[] getSubarrayBeauty(int[] nums, int k, int x) {
+        int[] res = new int[nums.length - k + 1];
+        //存储-50 ~ +50出现的次数，下标索引-50即为nums[]中的值
+        int[] tempRes = new int[50 * 2 + 1];
+        for (int i = 0; i < nums.length; i++) {
+            //进入窗口
+            tempRes[nums[i] + 50]++;
+
+            if (i - k + 1 < 0) continue;
+
+            //更新
+            for (int j = 0, c = 0; j < 50 && c < x; j++) {
+                //c为出现的次数
+                c += tempRes[j];
+                if (c >= x) {
+                    res[i - k + 1] = j - 50;
+                }
+            }
+            //移出窗口
+            tempRes[nums[i - k + 1] + 50]--;
+        }
+        return res;
     }
 
     /**
