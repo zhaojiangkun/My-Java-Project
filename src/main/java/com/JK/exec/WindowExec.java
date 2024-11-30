@@ -30,6 +30,39 @@ public class WindowExec {
     }
 
     /**
+     * 子串的最大出现次数
+     * @param s
+     * @param maxLetters
+     * @param minSize
+     * @param maxSize
+     * @return
+     */
+    public static int maxFreq(String s, int maxLetters, int minSize, int maxSize) {
+        //通过Map存储每一个符合子串的数量
+        Map<String, Integer> res = new HashMap<>();
+        //遍历每一种k值对应的滑动窗口，如果符合就将子串放进res中
+        for (int k = minSize; k <= maxSize; k++) {
+            Map<Character, Integer> window = new HashMap<>();
+            for (int i = 0; i < s.length(); i++) {
+                //进入窗口
+                window.put(s.charAt(i), window.getOrDefault(s.charAt(i), 0) + 1);
+
+                if (i - k + 1 < 0) continue;
+
+                //更新
+                if (window.size() <= maxLetters) {
+                    res.put(s.substring(i - k + 1, i + 1), res.getOrDefault(s.substring(i - k + 1, i + 1), 0) + 1);
+                }
+
+                //移出窗口
+                window.computeIfPresent(s.charAt(i - k + 1), (key, value) -> value - 1 == 0 ? null : value - 1);
+            }
+        }
+        //遍历res中子串最大的value值
+        return res.values().stream().max(Integer::compareTo).orElse(0);
+    }
+
+    /**
      * 拆炸弹
      * @param code
      * @param k
