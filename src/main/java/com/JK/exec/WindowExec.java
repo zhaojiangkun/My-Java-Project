@@ -22,11 +22,43 @@ public class WindowExec {
         int[] nums = ScanInUtil.scanInToIntArray();
         int m = ScanInUtil.scanInToInt();
 //        int k = ScanInUtil.scanInToInt();
-        System.out.println(maximumSubarraySum(nums, m));
+        System.out.println(maxScore(nums, m));
 //        int threshold = ScanInUtil.scanInToInt();
 //        for (int average : getAverages(nums, k)) {
 //            System.out.println(average);
 //        }
+    }
+
+    /**
+     * 可获得的最大点数
+     * 拿走最大点数的牌，剩下的牌都是连续的，
+     * 因此最大点数和 + 最小点数和 = 总点数和，最小点数和最小时，最大点数和最大
+     * @param cardPoints
+     * @param k
+     * @return
+     */
+    public static int maxScore(int[] cardPoints, int k) {
+        int sum = 0;
+        int tempSum = 0;
+        int res = Integer.MAX_VALUE;
+        int windowLength = cardPoints.length - k;
+        for (int i = 0; i < cardPoints.length; i++) {
+            //进入窗口
+            tempSum += cardPoints[i];
+            sum += cardPoints[i];
+
+            if (windowLength <= 0) continue;
+
+            if(i - windowLength + 1 < 0) continue;
+
+            //更新最小值
+            res = Math.min(tempSum, res);
+
+            //移出窗口
+            tempSum -= cardPoints[i - windowLength + 1];
+        }
+
+        return windowLength <= 0 ? sum : sum - res;
     }
 
     /**
