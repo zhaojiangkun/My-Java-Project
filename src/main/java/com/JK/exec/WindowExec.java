@@ -30,6 +30,30 @@ public class WindowExec {
     }
 
     /**
+     * 拆炸弹
+     * @param code
+     * @param k
+     * @return
+     */
+    public int[] decrypt(int[] code, int k) {
+        int n = code.length;
+        int[] ans = new int[n];
+        int r = k > 0 ? k + 1 : n;
+        k = Math.abs(k);
+        int s = 0;
+        //计算ans[0]
+        for (int i = r - k; i < r; i++) {
+            s += code[i]; // 计算 ans[0]
+        }
+        for (int i = 0; i < n; i++) {
+            ans[i] = s;
+            s += code[r % n] - code[(r - k) % n];
+            r++;
+        }
+        return ans;
+    }
+
+    /**
      * 可获得的最大点数
      * 拿走最大点数的牌，剩下的牌都是连续的，
      * 因此最大点数和 + 最小点数和 = 总点数和，最小点数和最小时，最大点数和最大
