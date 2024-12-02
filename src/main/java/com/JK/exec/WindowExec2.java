@@ -13,11 +13,39 @@ public class WindowExec2 {
     public static void main(String[] args) {
 //        int[] nums = ScanInUtil.scanInToIntArray();
 
-        System.out.println(equalSubstring("abcd", "cdef", 3));
+        System.out.println(longestSemiRepetitiveSubstring("52233"));
+    }
+
+    /**
+     * 找到最长的半重复子字符串
+     *
+     * @param s
+     * @return
+     */
+    public static int longestSemiRepetitiveSubstring(String s) {
+        int res = 1;
+        char[] chars = s.toCharArray();
+        int left = 0;
+        int same = 0;
+        for (int right = left + 1; right < chars.length; right++) {
+            if (chars[right] == chars[right - 1]) {
+                same++;
+                if (same > 1){
+                    left++;
+                    while (chars[left] != chars[left - 1]) {
+                        left++;
+                        same = 1;
+                    }
+                }
+            }
+            res = Math.max(res, right - left + 1);
+        }
+        return res;
     }
 
     /**
      * 尽可能使字符串相等
+     *
      * @param s
      * @param t
      * @param maxCost
@@ -40,7 +68,7 @@ public class WindowExec2 {
                 if ((cost >= maxCost && window[right] > 0) || (cost + window[right] > maxCost)) {
                     break;
                 } else {
-                //处理窗口右边界值
+                    //处理窗口右边界值
                     cost += window[right];
                     right++;
                 }
