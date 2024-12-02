@@ -1,7 +1,5 @@
 package com.JK.exec;
 
-import com.JK.util.ScanInUtil;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,9 +11,43 @@ import java.util.Map;
  */
 public class WindowExec2 {
     public static void main(String[] args) {
-        int[] nums = ScanInUtil.scanInToIntArray();
+//        int[] nums = ScanInUtil.scanInToIntArray();
 
-        System.out.println(longestSubarray(nums));
+        System.out.println(equalSubstring("abcd", "cdef", 3));
+    }
+
+    /**
+     * 尽可能使字符串相等
+     * @param s
+     * @param t
+     * @param maxCost
+     * @return
+     */
+    public static int equalSubstring(String s, String t, int maxCost) {
+        //window数组为s t每个字符的转换差值
+        int[] window = new int[s.length()];
+        for (int i = 0; i < s.length(); i++) {
+            window[i] = Math.abs(s.charAt(i) - t.charAt(i));
+        }
+//        int left = 0;
+        int res = 0;
+        for (int left = 0; left < window.length; left++) {
+            int right = left;
+            int cost = 0;
+//            int currentCost = maxCost;
+            while (right < window.length) {
+                //判断当前窗口是否溢出
+                if ((cost >= maxCost && window[right] > 0) || (cost + window[right] > maxCost)) {
+                    break;
+                } else {
+                //处理窗口右边界值
+                    cost += window[right];
+                    right++;
+                }
+                res = Math.max(res, right - left);
+            }
+        }
+        return res;
     }
 
     /**
