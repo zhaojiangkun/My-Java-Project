@@ -1,5 +1,7 @@
 package com.JK.exec;
 
+import com.JK.util.ScanInUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +13,36 @@ import java.util.Map;
  */
 public class WindowExec2 {
     public static void main(String[] args) {
-        System.out.println(maximumLengthSubstring("bcbbbcba"));
+        int[] nums = ScanInUtil.scanInToIntArray();
+
+        System.out.println(longestSubarray(nums));
+    }
+
+    /**
+     * 删除一个元素以后全为1的最长子数组
+     *
+     * @param nums
+     * @return
+     */
+    public static int longestSubarray(int[] nums) {
+        int res = 0;
+        for (int left = 0; left < nums.length; left++) {
+            int right = left;
+            int zero = 0;
+            while (right < nums.length) {
+                if (nums[right] == 0) {
+                    zero++;
+                    right++;
+                    if (zero > 1) {
+                        break;
+                    }
+                } else {
+                    right++;
+                }
+                res = Math.max(res, right - left);
+            }
+        }
+        return res - 1;
     }
 
     /**
