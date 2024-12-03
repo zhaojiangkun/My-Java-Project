@@ -1,5 +1,7 @@
 package com.JK.exec;
 
+import com.JK.util.ScanInUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,9 +13,37 @@ import java.util.Map;
  */
 public class WindowExec2 {
     public static void main(String[] args) {
-//        int[] nums = ScanInUtil.scanInToIntArray();
+        int[] nums = ScanInUtil.scanInToIntArray();
 
-        System.out.println(longestSemiRepetitiveSubstring("52233"));
+        System.out.println(totalFruit(nums));
+    }
+
+    /**
+     * 水果成篮
+     * @param fruits
+     * @return
+     */
+    public static int totalFruit(int[] fruits) {
+        int res = 0;
+        int left = 0;
+        int total = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int right = 0; right < fruits.length; right++) {
+            //统计每种水果的种类
+            map.put(fruits[right], map.getOrDefault(fruits[right], 0) + 1);
+            if (map.get(fruits[right]) == 1) {
+                total++;
+            }
+            while (total > 2) {
+                map.put(fruits[left], map.get(fruits[left]) - 1);
+                if (map.get(fruits[left]) == 0) {
+                    total--;
+                }
+                left++;
+            }
+            res = Math.max(res, right - left + 1);
+        }
+        return res;
     }
 
     /**
