@@ -20,28 +20,32 @@ public class WindowExec2 {
 
     /**
      * 水果成篮
+     *
      * @param fruits
      * @return
      */
     public static int totalFruit(int[] fruits) {
         int res = 0;
         int left = 0;
-        int total = 0;
+        int baskets = 0;
         Map<Integer, Integer> map = new HashMap<>();
         for (int right = 0; right < fruits.length; right++) {
-            //统计每种水果的种类
             map.put(fruits[right], map.getOrDefault(fruits[right], 0) + 1);
             if (map.get(fruits[right]) == 1) {
-                total++;
-            }
-            while (total > 2) {
-                map.put(fruits[left], map.get(fruits[left]) - 1);
-                if (map.get(fruits[left]) == 0) {
-                    total--;
+                //水果种类+1
+                baskets++;
+                //如果水果种类大于2，则移动左指针
+                while (baskets > 2) {
+                    //将左指针对应的水果种类减一
+                    map.put(fruits[left], map.get(fruits[left]) - 1);
+                    //如果左指针对应的水果种类为0，则水果种类-1
+                    if (map.get(fruits[left]) == 0) {
+                        baskets--;
+                    }
+                    left++;
                 }
-                left++;
             }
-            res = Math.max(res, right - left + 1);
+            res = Math.max(right - left + 1, res);
         }
         return res;
     }
@@ -60,7 +64,7 @@ public class WindowExec2 {
         for (int right = left + 1; right < chars.length; right++) {
             if (chars[right] == chars[right - 1]) {
                 same++;
-                if (same > 1){
+                if (same > 1) {
                     left++;
                     while (chars[left] != chars[left - 1]) {
                         left++;
