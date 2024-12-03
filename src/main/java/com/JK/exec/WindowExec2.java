@@ -15,7 +15,36 @@ public class WindowExec2 {
     public static void main(String[] args) {
         int[] nums = ScanInUtil.scanInToIntArray();
 
-        System.out.println(totalFruit(nums));
+        System.out.println(maximumUniqueSubarray(nums));
+    }
+
+    /**
+     * 删除子数组的最大得分
+     *
+     * @param nums
+     * @return
+     */
+    public static int maximumUniqueSubarray(int[] nums) {
+        int res = 0;
+        int sum = 0;
+        int left = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int right = 0; right < nums.length; right++) {
+            if (!map.containsKey(nums[right])) {
+                map.put(nums[right], 1);
+                sum += nums[right];
+                res = Math.max(res, sum);
+            } else {
+                //处理左指针
+                while (nums[left] != nums[right]){
+                    sum -= nums[left];
+                    map.remove(nums[left]);
+                    left++;
+                }
+                left++;
+            }
+        }
+        return res;
     }
 
     /**
