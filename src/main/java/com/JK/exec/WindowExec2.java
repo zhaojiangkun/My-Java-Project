@@ -14,8 +14,36 @@ import java.util.Map;
 public class WindowExec2 {
     public static void main(String[] args) {
         int[] nums = ScanInUtil.scanInToIntArray();
+        int k = ScanInUtil.scanInToInt();
 
-        System.out.println(maximumUniqueSubarray(nums));
+        System.out.println(maxSubarrayLength(nums, k));
+    }
+
+    /**
+     * 最多k个重复元素的最长子数组
+     * @param nums
+     * @param k
+     * @return
+     */
+    public static int maxSubarrayLength(int[] nums, int k) {
+        int res = 0;
+        int left = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int right = 0; right < nums.length; right++) {
+            //
+            if (map.getOrDefault(nums[right], 0) < k) {
+                map.put(nums[right], map.getOrDefault(nums[right], 0) + 1);
+
+            } else {
+                while (nums[left] != nums[right]){
+                    map.put(nums[left], map.get(nums[left]) - 1);
+                    left++;
+                }
+                left++;
+            }
+            res = Math.max(res, right - left + 1);
+        }
+        return res;
     }
 
     /**
